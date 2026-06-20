@@ -47,7 +47,7 @@ I'm João Victor Siqueira Migliorini, 20 years old, currently studying Software 
 <div align="center">  
   <img height="150em" src="https://github-readme-stats.vercel.app/api?username=SikasZN&show_icons=true&theme=codeSTACKr&hide_border=true"/>
   <img height="150em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SikasZN&layout=compact&theme=codeSTACKr&hide_border=true"/>
-  <img src="https://raw.githubusercontent.com/SikasZN/SikasZN/activity-graph-output/activity-graph.svg?radius=16&theme=elegant&area=true&order=5" height="240" alt="activity-graph graph"  />
+  <img src="https://raw.githubusercontent.com/SikasZN/SikasZN/activity-graph-output/activity-graph.svg?radius=16&theme=codeSTACKr&area=true&order=5" height="240" alt="activity-graph graph"  />
   
 </div>
 
