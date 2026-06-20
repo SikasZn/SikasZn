@@ -1,4 +1,22 @@
-<h2 align="center"> Contact Me On My Social Media 📲 </h2>
+<!-- Bloco sobre mim !-->
+<h1> João Siqueira 👨‍💻</h1>
+
+<h3> 🇧🇷 </h3>
+
+**`Desenvolvedor FullStack`**
+
+Sou João Victor Siqueira Migliorini, tenho 20 anos e atualmente curso Engenharia de Software na UNICV, após concluir o ensino médio no Colégio de Aplicação Pedagógica da UEM (CAP). Minha relação com a tecnologia começou ainda na infância, através dos jogos eletrônicos, foi jogando que nasceu minha curiosidade sobre como esses mundos eram construídos, o que mais tarde se transformou no desejo de aprender a criar os meus próprios. Hoje, venho desenvolvendo habilidades em diversas frentes: automações, criação de sites e projetos de pequeno e médio porte, adaptando-me com facilidade a diferentes linguagens de programação conforme o desafio exige. Estou em constante aprendizado, expandindo meu repertório técnico com novas linguagens e explorando o universo das automações com inteligência artificial, sempre buscando unir a paixão que me trouxe até aqui com a evolução contínua das tecnologias.
+
+<h3> 🇺🇸 </h3>
+
+**`Developer FullStack`**
+
+I'm João Victor Siqueira Migliorini, 20 years old, currently studying Software Engineering at UNICV after completing high school at Colégio de Aplicação Pedagógica da UEM (CAP). My relationship with technology started in childhood through video games. It was while playing that my curiosity about how those worlds were built first sparked, which later grew into a drive to learn how to create them myself. Today, I'm developing skills across several areas: automation, web development, and small to medium-sized projects, adapting easily to different programming languages as each challenge requires. I'm constantly learning, expanding my technical toolkit with new languages and exploring the world of AI-driven automation, always aiming to combine the passion that brought me here with the continuous evolution of technology.
+
+---
+
+<!-- Bloco de contato !-->
+<h2> Contact Me On My Social Media 📲 </h2>
 <div data-importer="socials" align="center">
 
   <!-- INSTAGRAM !-->
@@ -25,7 +43,7 @@
 ---
 
 <!-- Bloco dos status do meu GitHub !-->
-<h2 align="center"> My GitHub Stats 📊 </h2>
+<h2> My GitHub Stats 📊 </h2>
 <div align="center">  
   <img height="150em" src="https://github-readme-stats.vercel.app/api?username=SikasZN&show_icons=true&theme=codeSTACKr&hide_border=true"/>
   <img height="150em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=SikasZN&layout=compact&theme=codeSTACKr&hide_border=true"/>
@@ -38,7 +56,7 @@
 <!-- Bloco das minhas linguagens de programação dominate !-->
 <div align="center">
   
-<h2 align="center"> Programming Skills 💻 </h2>
+<h2> Programming Skills 💻 </h2>
 
 <p align="center">
   <a href="https://skillicons.dev">
@@ -49,9 +67,9 @@
 
 ---
 <!-- Bloco do SVG criado por mim !-->
-<p align="center">
+<p>
   <a>
-    <h5 align="center"> ▹ My Basic SVG Project Using HTML 🛣️</h5>
+    <h6> ▹ My Basic SVG Project Using HTML 🛣️</h6>
   </a>
 </p>
 
