@@ -1,0 +1,238 @@
+<svg viewBox="0 0 900 220" width="900" height="220"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="Pixel art runner desviando de canos - banner animado para README">
+
+  <title>Pixel Runner</title>
+
+  <!--
+    README ANIMADO - GUIA RAPIDO DE PERSONALIZACAO
+
+    1) VELOCIDADE GERAL DA FASE
+       O "relogio mestre" da cena tem 4s, definido nas animacoes
+       .pipe (pipeMove) e .character-bounce (jumpArc). Se mudar a
+       duracao de UMA, mude a da OUTRA tambem, senao o pulo deixa
+       de coincidir com a chegada do cano.
+
+    2) CORES
+       Jaqueta puffer: fill="#e63946" (vermelho) e fill="#c5293a"
+       (linhas de costura, vermelho mais escuro).
+       Calca cargo: fill="#cbbfa5" (bege) e fill="#a89878" (bolso).
+       Tenis: fill="#1f2a38" (cabedal) e fill="#f2f2f2" (sola).
+       Oculos: stroke="#7a1f2b" (armacao fina vermelha/vinho).
+       Canos: fill="#9aa5ad" / "#aeb8c0" (metal cinza).
+       Ceu: gradiente linearGradient id="sky".
+
+    3) POSICAO DO PERSONAGEM NA TELA
+       O personagem fica parado horizontalmente (x perto de 150) e
+       o cenario se move: e a tecnica classica de "endless runner".
+       Para reposicionar, some ou subtraia um valor fixo de TODAS
+       as coordenadas dentro de g class="character-bounce".
+
+    4) ALTURA DO PULO
+       Keyframe jumpArc, valor translateY(-55px). Os canos tem 50px
+       de altura (g id="pipe"); se aumentar o cano, aumente o pulo
+       na mesma proporcao.
+  -->
+
+  <defs>
+    <!-- Gradiente do ceu -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#bfe9ff"/>
+      <stop offset="100%" stop-color="#eef9ff"/>
+    </linearGradient>
+
+    <!-- Textura do chao em tile repetivel (60px de largura) -->
+    <pattern id="groundPat" width="60" height="45" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0"  width="60" height="10" fill="#7cc576"/>
+      <rect x="0" y="10" width="60" height="35" fill="#8a5a36"/>
+      <rect x="0"  y="8" width="10" height="3" fill="#5fa856"/>
+      <rect x="20" y="8" width="8"  height="3" fill="#5fa856"/>
+      <rect x="40" y="8" width="12" height="3" fill="#5fa856"/>
+      <rect x="6"  y="20" width="6" height="6" fill="#6e4527"/>
+      <rect x="30" y="28" width="8" height="6" fill="#6e4527"/>
+      <rect x="48" y="18" width="6" height="6" fill="#6e4527"/>
+    </pattern>
+
+    <!-- CANO (obstaculo). Coordenadas locais: x 0 a 34, y 0 (topo) a 50 (chao) -->
+    <g id="pipe">
+      <rect x="0"  y="14" width="34" height="36" fill="#9aa5ad" stroke="#5d6770" stroke-width="1.5"/>
+      <rect x="-4" y="0"  width="42" height="16" rx="2" fill="#aeb8c0" stroke="#5d6770" stroke-width="1.5"/>
+      <rect x="3"  y="18" width="4"  height="28" fill="#c3ccd2" opacity="0.6"/>
+      <circle cx="6"  cy="6"  r="1.4" fill="#5d6770"/>
+      <circle cx="28" cy="6"  r="1.4" fill="#5d6770"/>
+      <circle cx="6"  cy="44" r="1.4" fill="#5d6770"/>
+      <circle cx="28" cy="44" r="1.4" fill="#5d6770"/>
+    </g>
+
+    <!-- PERNA (calca cargo + tenis). Reaproveitada via use nos 3 frames de corrida e na pose de pulo -->
+    <g id="leg">
+      <rect x="-4.5" y="-24" width="9" height="16" fill="#cbbfa5"/>
+      <rect x="-3.5" y="-20" width="3" height="4"  fill="#a89878"/>
+      <rect x="-4.5" y="-8"  width="9" height="5"  fill="#1f2a38"/>
+      <rect x="-5.5" y="-3"  width="11" height="3" fill="#f2f2f2"/>
+    </g>
+
+    <!-- BRACO (manga da jaqueta + mao) -->
+    <g id="arm">
+      <rect x="-3.5" y="-58" width="7" height="18" fill="#e63946"/>
+      <rect x="-3.5" y="-41" width="7" height="5"  fill="#e8b48a"/>
+    </g>
+  </defs>
+
+  <style>
+    <![CDATA[
+    * { shape-rendering: crispEdges; }
+
+    /* NUVENS: parallax lento, reforca sensacao de velocidade */
+    .cloud-layer { animation: cloudDrift 18s linear infinite; }
+    @keyframes cloudDrift {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-900px); }
+    }
+
+    /* CHAO: textura rolando continuamente */
+    .ground-tile { animation: groundScroll .3s linear infinite; }
+    @keyframes groundScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-60px); }
+    }
+
+    /* CANOS: ciclo de 4s = relogio mestre da fase.
+       .pipe--b comeca na metade do ciclo (-2s) para criar um fluxo
+       continuo de obstaculos (enquanto um sai, o outro ja esta a caminho) */
+    .pipe { animation: pipeMove 4s linear infinite; }
+    .pipe--b { animation-delay: -2s; }
+    @keyframes pipeMove {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-1000px); }
+    }
+
+    /* PERSONAGEM: pulo automatico, sincronizado com pipeMove.
+       O cano leva ~3s (75% dos 4s) para sair de x=900 e chegar em
+       x=150 (posicao do personagem); por isso os picos do pulo
+       ficam em 25% e 75% do ciclo. */
+    .character-bounce { animation: jumpArc 4s ease-in-out infinite; }
+    @keyframes jumpArc {
+      0%, 21%   { transform: translateY(0); }
+      25%       { transform: translateY(-55px); }
+      29%, 71%  { transform: translateY(0); }
+      75%       { transform: translateY(-55px); }
+      79%, 100% { transform: translateY(0); }
+    }
+
+    /* Troca entre pernas correndo e pernas dobradas no salto,
+       usando os mesmos pontos no tempo do pulo acima. */
+    .legs-run-wrap { animation: poseToggle 4s steps(1, end) infinite; }
+    @keyframes poseToggle {
+      0%, 20%   { opacity: 1; }
+      21%, 29%  { opacity: 0; }
+      30%, 70%  { opacity: 1; }
+      71%, 79%  { opacity: 0; }
+      80%, 100% { opacity: 1; }
+    }
+    .jump-pose { animation: poseToggleInverse 4s steps(1, end) infinite; opacity: 0; }
+    @keyframes poseToggleInverse {
+      0%, 20%   { opacity: 0; }
+      21%, 29%  { opacity: 1; }
+      30%, 70%  { opacity: 0; }
+      71%, 79%  { opacity: 1; }
+      80%, 100% { opacity: 0; }
+    }
+
+    /* Ciclo de corrida: 3 frames alternando em loop rapido (.45s),
+       independente do pulo, cuidando so do "passinho" das pernas. */
+    .frame { animation: legCycle .45s steps(1, end) infinite; opacity: 0; }
+    .frame1 { animation-delay: 0s;   }
+    .frame2 { animation-delay: .15s; }
+    .frame3 { animation-delay: .30s; }
+    @keyframes legCycle {
+      0%   { opacity: 1; }
+      33%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    ]]>
+  </style>
+
+  <!-- CEU -->
+  <rect x="0" y="0" width="900" height="220" fill="url(#sky)"/>
+
+  <!-- NUVENS, com copia duplicada em +900 para o loop ficar perfeito -->
+  <g class="cloud-layer" fill="#ffffff" opacity="0.9">
+    <g>
+      <rect x="60"  y="22" width="28" height="8" rx="2"/><rect x="66" y="16" width="14" height="6" rx="2"/>
+      <rect x="260" y="38" width="28" height="8" rx="2"/><rect x="266" y="32" width="14" height="6" rx="2"/>
+      <rect x="480" y="18" width="28" height="8" rx="2"/><rect x="486" y="12" width="14" height="6" rx="2"/>
+      <rect x="700" y="46" width="28" height="8" rx="2"/><rect x="706" y="40" width="14" height="6" rx="2"/>
+    </g>
+    <g>
+      <rect x="960"  y="22" width="28" height="8" rx="2"/><rect x="966"  y="16" width="14" height="6" rx="2"/>
+      <rect x="1160" y="38" width="28" height="8" rx="2"/><rect x="1166" y="32" width="14" height="6" rx="2"/>
+      <rect x="1380" y="18" width="28" height="8" rx="2"/><rect x="1386" y="12" width="14" height="6" rx="2"/>
+      <rect x="1600" y="46" width="28" height="8" rx="2"/><rect x="1606" y="40" width="14" height="6" rx="2"/>
+    </g>
+  </g>
+
+  <!-- CANOS (obstaculos) -->
+  <use href="#pipe" class="pipe"         x="900" y="125"/>
+  <use href="#pipe" class="pipe pipe--b" x="900" y="125"/>
+
+  <!-- PERSONAGEM. Coordenadas absolutas, ja somadas ao ponto central
+       do personagem (cx perto de 150, linha do chao cy=175), entao a
+       unica animacao do grupo inteiro e o pulo vertical. -->
+  <g class="character-bounce">
+
+    <!-- pernas e bracos: ciclo de corrida (3 frames) -->
+    <g class="legs-run-wrap">
+      <g class="frame frame1">
+        <use href="#leg" x="143.5" y="175" transform="translate(-3,2)"/>
+        <use href="#leg" x="156.5" y="175" transform="translate(3,-4)"/>
+        <use href="#arm" x="129.5" y="175" transform="translate(3,-2)"/>
+        <use href="#arm" x="170.5" y="175" transform="translate(-3,2)"/>
+      </g>
+      <g class="frame frame2">
+        <use href="#leg" x="143.5" y="175" transform="translate(1,0)"/>
+        <use href="#leg" x="156.5" y="175" transform="translate(-1,0)"/>
+        <use href="#arm" x="129.5" y="175" transform="translate(-1,0)"/>
+        <use href="#arm" x="170.5" y="175" transform="translate(1,0)"/>
+      </g>
+      <g class="frame frame3">
+        <use href="#leg" x="143.5" y="175" transform="translate(3,-4)"/>
+        <use href="#leg" x="156.5" y="175" transform="translate(-3,2)"/>
+        <use href="#arm" x="129.5" y="175" transform="translate(-3,2)"/>
+        <use href="#arm" x="170.5" y="175" transform="translate(3,-2)"/>
+      </g>
+    </g>
+
+    <!-- pernas e bracos: pose unica usada durante o salto -->
+    <g class="jump-pose">
+      <use href="#leg" x="143.5" y="175" transform="translate(-1,-10)"/>
+      <use href="#leg" x="156.5" y="175" transform="translate(1,-10)"/>
+      <use href="#arm" x="129.5" y="175" transform="translate(-2,-6)"/>
+      <use href="#arm" x="170.5" y="175" transform="translate(2,-6)"/>
+    </g>
+
+    <!-- tronco: jaqueta puffer vermelha, fechada -->
+    <rect x="131" y="151" width="38" height="6"  fill="#cbbfa5"/>
+    <rect x="131" y="113" width="38" height="40" rx="6" fill="#e63946"/>
+    <line x1="131" y1="123" x2="169" y2="123" stroke="#c5293a" stroke-width="2"/>
+    <line x1="131" y1="131" x2="169" y2="131" stroke="#c5293a" stroke-width="2"/>
+    <line x1="131" y1="139" x2="169" y2="139" stroke="#c5293a" stroke-width="2"/>
+    <rect x="140" y="111" width="20" height="8" rx="3" fill="#c5293a"/>
+    <line x1="150" y1="113" x2="150" y2="153" stroke="#7a1620" stroke-width="1.2"/>
+
+    <!-- cabeca -->
+    <rect x="135" y="83" width="30" height="10" fill="#3b2a1e"/>
+    <rect x="137" y="91" width="26" height="22" fill="#e8b48a"/>
+
+    <!-- oculos: armacao fina vermelha/vinho, lente levemente azulada -->
+    <rect x="138" y="99" width="10" height="7" fill="#cfe9f5" fill-opacity="0.55" stroke="#7a1f2b" stroke-width="1.4"/>
+    <rect x="152" y="99" width="10" height="7" fill="#cfe9f5" fill-opacity="0.55" stroke="#7a1f2b" stroke-width="1.4"/>
+    <line x1="148" y1="102" x2="152" y2="102" stroke="#7a1f2b" stroke-width="1.4"/>
+    <line x1="138" y1="101" x2="134" y2="100" stroke="#7a1f2b" stroke-width="1.2"/>
+    <line x1="162" y1="101" x2="166" y2="100" stroke="#7a1f2b" stroke-width="1.2"/>
+  </g>
+
+  <!-- CHAO -->
+  <rect class="ground-tile" x="0" y="175" width="960" height="45" fill="url(#groundPat)"/>
+
+</svg>
