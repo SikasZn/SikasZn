@@ -22,7 +22,7 @@ jobs:
       - name: Generate activity graph
         uses: maurodesouza/github-readme-activity-graph-action@v1
         with:
-          username: ${{ github.SikasZN }}
+          username: ${{ github.repository_owner }}
           options: radius=16&theme=elegant&area=true
           output_path: dist/activity-graph.svg
           token: ${{ secrets.GITHUB_TOKEN }}
